@@ -7,27 +7,16 @@
         $(document).ready(function () {
             var blogs = [];
             // let authors = []
-            $(window).load(function () {
-                $('#authorSelect').empty();
-                $.get('http://localhost:4000/blogs/authors', function (res) {
-                    // console.log('')
-                    res.forEach((author) => {
-                        $('#authorSelect').append(`<option value='${author}'>${author}</option>`)
-                    })
-                    // console.log(res)
-                })
+            $("getAuthors").click(function () {
+                $('#blogList').empty();
+                $.get('http://localhost:4000/blogs/')
             })
             $("#getBlogs").click(function () {
                 $('#blogList').empty();
                 let selected = $('#optionsFilter option:selected').val()
-                let authorFilter= $('#authorSelect option:selected').val()
-                console.log(authorFilter)
-                // $.get(`http://localhost:4000/blogs/all?sort=${selected}`, function (blogs) {
-                //     blogs.forEach((blog) => {
-                //         $("#blogList").append("<li>" + "Id#" + blog.id + ' Title:' + blog.title + '-' + 'Text:' + blog.text + "Author: " + blog.author + "</li>");
-                //     });
-                // });
-                $.get(`http://localhost:4000/blogs/all?filter=${authorFilter}`, function (blogs) {
+                // let desc= $('#optionsFilter option[value="Descending"]')
+                console.log(selected)
+                $.get(`http://localhost:4000/blogs/all?sort=${selected}`, function (blogs) {
                     blogs.forEach((blog) => {
                         $("#blogList").append("<li>" + "Id#" + blog.id + ' Title:' + blog.title + '-' + 'Text:' + blog.text + "Author: " + blog.author + "</li>");
                     });
@@ -48,15 +37,15 @@
         <option value="asc" selected>Ascending</option>
         <option value="desc">Descending</option>
     </select>
-    <label>Filter By Author</label>
-    <select id="authorSelect" >
+    <select id="authorSelect">
         <!-- <option value="asc" selected>Ascending</option> -->
 
     </select>
+    <button id="getAuthors">Get Authors</button>
     <button id="getBlogs">Get Blogs</button>
 
     <ul id="blogList"></ul>
-    
+
 </body>
 
 </html>

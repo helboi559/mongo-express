@@ -119,3 +119,10 @@
 ### CRUD OPERATIONS - Delete a post
 
 - Implement the delete single blog functionality. Hint: you will have to create a new route in the blogs.js file to handle the delete. The route should use a ROUTE PARAM to specify which blog to delete. I.E. /blogs/deleteblog/:blogId.
+
+* Stretch Goal 1: Add field level validation to the new blog post submit functionality. I.E. for the /submit route, check to see that the user has correctly inputted all required fields and that they are the correct type. If the validation fails, do not let the user save the post.
+* Stretch Goal 2: If there is a validation level error (such as a user not including an author name on a new post), send that specific error to the client/browser and display it so the user can see it. The user should be able to adjust their input values as necessary and resubmit.
+* Stretch Goal 3: Add the frontend and backend functionality necessary to display all blogs submitted by a particular author by adding a dropdown menu with the author list. Approach:
+  - Create a new GET route /authors that returns a list of authors to the browser. You may need to make a new button in the browser that will fetch this list from the server onClick.
+  - Display the fetched list of authors as a dropdown field.
+  - When the user selects a particular author from the dropdown, the browser should make a request to the /blogs/all route with the author as a filter param. The response should be a list of blog posts for that particular author. Display that list of fetched blogs to the user on the page.

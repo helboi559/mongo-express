@@ -23,26 +23,21 @@
                     });
                 };
             });
-            var title, text, author, blogId, category;
+            var title, text, author, blogId;
             $("#submit").click(function () {
                 title = $("#title").val();
                 text = $("#text").val();
                 author = $("#author").val();
-                category = $('#category').val();
                 $.post(
                     "http://localhost:4000/blogs/submit",
-                    { title: title, text: text, author: author, category:category}, function (res) {
-                        console.log('response: ', res)
-                    }
+                    { title: title, text: text, author: author }
                 );
-
             });
             $('#update').click(function () {
                 blogId = $('#blog-id').val();
                 title = $("#title").val();
                 text = $("#text").val();
                 author = $("#author").val();
-                category = $('#category').val();
                 $.put('http://localhost:4000/blogs/update-blog/' + blogId, {
                     title: title,
                     text: text,
@@ -55,23 +50,21 @@
 </head>
 
 <body>
-    <h1>Create/Edit Blog</h1>
-    
+    <h1>Add New Blog</h1>
+    <h2>
+        <a href="http://localhost:4000/blogs/displayBlogs">Display Blogs</a>
+        <a href="http://localhost:4000/blogs/display-single-blog">Display Single Blog</a>
+        <a href="http://localhost:4000/blogs/post-blog">Edit and create blogs</a>
+    </h2>
     <label>Blog Title</label>
-    <input id="title" size="20" type="text" />
+    <input id="title" size="100" type="text" />
     <label>Blog Text</label>
-    <input id="text" size="50" type="text" />
+    <input id="text" size="100" type="text" />
     <label>Blog Author</label>
     <input id="author" size="40" type="text" />
-    <label>Category</label>
-    <input id="category" size="20" type="text" />
-    <div><input id="submit" type="button" value="Create Blog" /></div>
-    <p><label>Blog ID to UPDATE</label> <input id="blog-id" type="text" /> <button id="update" type="button">Update Blog</button></p>
-    
+    <input id="submit" type="button" value="Submit" />
+    <p><label>Blog ID to UPDATE</label> <input id="blog-id" size="40" type="text" /></p>
+    <button id="update" type="button">Update</button>
 </body>
-    <h2>
-        <a href="http://localhost:4000/blogs/display-blogs">Display Blogs</a> - 
-        <a href="http://localhost:4000/blogs/display-single-blog">Display/Delete Single blog</a> -
-        <a href="http://localhost:4000/blogs/post-blog">Create/Update blog</a>
-    </h2>
+
 </html>
