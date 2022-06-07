@@ -17,16 +17,22 @@
                     // console.log(res)
                 })
             })
-            $("#getBlogs").click(function () {
+            $("#sortBlogs").click(function () {
                 $('#blogList').empty();
                 let selected = $('#optionsFilter option:selected').val()
-                let authorFilter= $('#authorSelect option:selected').val()
-                console.log(authorFilter)
-                // $.get(`http://localhost:4000/blogs/all?sort=${selected}`, function (blogs) {
-                //     blogs.forEach((blog) => {
-                //         $("#blogList").append("<li>" + "Id#" + blog.id + ' Title:' + blog.title + '-' + 'Text:' + blog.text + "Author: " + blog.author + "</li>");
-                //     });
-                // });
+                // let authorFilter= $('#authorSelect option:selected').val()
+                // console.log(authorFilter)
+                $.get(`http://localhost:4000/blogs/all?sort=${selected}`, function (blogs) {
+                    blogs.forEach((blog) => {
+                        $("#blogList").append("<li>" + "Id#" + blog.id + ' Title:' + blog.title + '-' + 'Text:' + blog.text + "Author: " + blog.author + "</li>");
+                    });
+                });
+            });
+            $("#filterBlogs").click(function () {
+                $('#blogList').empty();
+                // let selected = $('#optionsFilter option:selected').val()
+                let authorFilter = $('#authorSelect option:selected').val()
+                // console.log(authorFilter)
                 $.get(`http://localhost:4000/blogs/all?filter=${authorFilter}`, function (blogs) {
                     blogs.forEach((blog) => {
                         $("#blogList").append("<li>" + "Id#" + blog.id + ' Title:' + blog.title + '-' + 'Text:' + blog.text + "Author: " + blog.author + "</li>");
@@ -40,20 +46,21 @@
 <body>
     <h1>Display Blogs</h1>
     <h2>
-        <a href="http://localhost:4000/blogs/display-blogs">Display Blogs</a>
-        <a href="http://localhost:4000/blogs/display-single-blog">Display/Delete Single blog</a>
+        <a href="http://localhost:4000/blogs/display-blogs">Display Blogs</a> -
+        <a href="http://localhost:4000/blogs/display-single-blog">Display/Delete Single blog</a> -
         <a href="http://localhost:4000/blogs/post-blog">Create/Update blog</a>
     </h2>
     <select id="optionsFilter">
         <option value="asc" selected>Ascending</option>
         <option value="desc">Descending</option>
     </select>
+    <button id="sortBlogs">Get Sorted Blogs</button>
     <label>Filter By Author</label>
     <select id="authorSelect" >
         <!-- <option value="asc" selected>Ascending</option> -->
 
     </select>
-    <button id="getBlogs">Get Blogs</button>
+    <button id="filterBlogs">Get Filtered Blogs</button>
 
     <ul id="blogList"></ul>
     

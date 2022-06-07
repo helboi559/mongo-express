@@ -24,39 +24,25 @@ router.get('/' , async function (req,res,next) {
 // get all posts and able to sort them /asc||desc ()
 router.get('/all' , async function (req,res,next) {
     let sorted = req.query.sort
+    if(sorted === 'asc') {
+        sorted = 1
+    } else if (sorted === 'desc') {
+        sorted = -1
+    }
     let filtered = req.query.filter
-    console.log(filtered)
+    // console.log('filtered',filtered)
+    // console.log('sorted', sorted)
     try {
         //changed from db.<name of collection>.doSomething() to db.collection('<name of collection>')
         const collection = await blogsDB().collection('posts2')
-        const posts2 = await collection.find({}).toArray()
-        // console.log(posts2)
-        // posts2.sort((a,b)=> {
-      
-        // if(sorted === 'asc') {
-        //     if(a.createdAt < b.createdAt) {
-        //     return -1
-        //     }
-        //     if(a.createdAt > b.createdAt) {
-        //     return 1
-        //     }
-        // }
-        // if(sorted === 'desc') {
-        //     if(a.createdAt > b.createdAt) {
-        //     return -1
-        //     }
-        //     if(a.createdAt < b.createdAt) {
-        //     return 1
-        //     }
-        // }
-        // return 0
-        // })
-        posts2.reduce((post,index,arr) => {
-            // arr.pop()
-            return post.author === filtered
-        })
-        console.log(posts2)
-        res.json(posts2)
+        if (filtered !== undefined) {
+            const posts2 = await collection.find({author:filtered}).toArray()
+            res.json(posts2)
+        } else if (sorted !== undefined) {
+            const posts2 = await collection.find({}).sort({createdAt:sorted}).toArray()
+            res.json(posts2)
+        }
+        
     } catch(e) {
         console.log(e)
         res.status(e).send('error fetching data ' + e)
